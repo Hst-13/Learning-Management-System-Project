@@ -1,0 +1,101 @@
+#log_in {
+  grid-area: page_section;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#log_in .jumbotron {
+  margin: 1rem 0;
+  padding: 2rem 2rem;
+  background-color: var(--color3);
+  box-shadow: 0 0 20px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+#log_in h2 {
+  font-weight: 700;
+}
+
+#log_in ul {
+  list-style: none;
+  margin: 0;
+}
+
+#log_in li {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+}
+
+#log_in #password {
+  font-weight: 400;
+}
+
+#log_in #password:hover {
+  font-weight: 800;
+}
+
+#log_in label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+#log_in input {
+  margin: 0;
+  padding: 0.5em 1em;
+  width: 400px;
+  outline: none;
+  border: 2px solid var(--color1);
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+#log_in .submit {
+  margin: 0.75rem 0;
+  padding: 0.5em;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.75rem;
+  border-radius: 5px;
+  border: 2px solid var(--color1);
+  background-color: var(--color2);
+  transition: 0.3s;
+}
+
+#log_in .submit:hover {
+  letter-spacing: 0rem;
+  color: white;
+}
+
+#log_in p {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+#log_in span {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  color: white;
+  transition: 0.1s;
+}
+
+#log_in span:hover {
+  cursor: pointer;
+  color: var(--color4);
+}
+
+#log_in li .error {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: red;
+}

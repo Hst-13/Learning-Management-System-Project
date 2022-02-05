@@ -1,0 +1,149 @@
+#profile {
+  width: 100%;
+  grid-area: page_section;
+}
+
+#profile .container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  padding: 2rem;
+  margin-bottom: 0;
+}
+
+#profile .upper {
+  padding: 2rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid var(--color2);
+  border-radius: 15px;
+  box-shadow: 0 0 10px black;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+#profile .picture {
+  width: 40%;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#profile .picture img {
+  border: 3px solid var(--color2);
+  border-radius: 50%;
+  width: 30%;
+  background-color: rgb(201, 201, 201);
+  margin-bottom: 0.5rem;
+}
+
+#profile .picture input {
+  font-size: 0.75rem;
+  width: 60%;
+}
+
+#profile .name {
+  width: 60%;
+}
+
+#profile #full_name {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+#profile #username {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+#profile #email {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+#profile .buttons {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#profile p {
+  grid-area: label;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+#profile .buttons .edit,
+#profile .buttons .save,
+#profile .buttons .cancel {
+  grid-area: input;
+  text-align: center;
+  width: 100px;
+  margin: 0 0.5rem;
+  padding: 0.5em 0.5em;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid var(--color2);
+}
+
+#profile .buttons .save {
+  background-color: rgba(0, 216, 0, 0.6);
+}
+
+#profile .buttons .cancel {
+  background-color: rgba(226, 0, 0, 0.6);
+}
+
+#profile .details {
+  margin-top: 2rem;
+  padding: 2rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  border: 2px solid var(--color2);
+  border-radius: 15px;
+  box-shadow: 0 0 10px black;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+#profile .details form {
+  width: 100%;
+}
+
+#profile .details ul {
+  list-style: none;
+  margin: 0;
+}
+
+#profile .details li {
+  display: grid;
+  grid-template-areas: "label input";
+  grid-template-columns: 1fr 2fr;
+  margin: 1rem 0;
+}
+
+#profile .details label {
+  grid-area: label;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+#profile .details input,
+#profile .details select {
+  grid-area: input;
+  padding: 0 1em;
+  outline: none;
+  border: 2px solid var(--color4);
+  border-radius: 5px;
+}

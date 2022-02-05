@@ -1,0 +1,79 @@
+<%- include("./partials/header.ejs") %>
+
+<section id="log_in">
+  <div class="jumbotron">
+    <form>
+      <h2>Log In</h2>
+      <ul>
+        <li>
+          <label for="email">Email :</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Enter your email address"
+            name="email"
+          />
+          <div class="email error"></div>
+        </li>
+        <li>
+          <label for="password">Password :</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Minimum 6 characters"
+          />
+          <div class="password error"></div>
+        </li>
+      </ul>
+      <input class="submit btn btn-md" type="submit" value="Log In" />
+    </form>
+    <p>
+      New User?
+      <span>Sign Up.</span>
+    </p>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector("form");
+  const emailError = document.querySelector(".email.error");
+  const passwordError = document.querySelector(".password.error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    emailError.textContent = "";
+    passwordError.textContent = "";
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    console.log(email, password);
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.errors) {
+        emailError.textContent = data.errors.email;
+        passwordError.textContent = data.errors.password;
+      }
+
+      if (data.user) {
+        location.assign("/dashboard");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>
+
+<%- include("./partials/footer.ejs") %>

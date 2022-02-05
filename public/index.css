@@ -1,0 +1,40 @@
+#lms {
+  text-align: center;
+  height: 580px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#lms h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 2rem;
+}
+
+#lms h3 {
+  margin: 2rem;
+}
+
+#lms a {
+  width: 100%;
+}
+
+#lms button {
+  margin: 1rem;
+  padding: 0.2em;
+  width: 40%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 2px solid black;
+  background-color: rgb(236, 154, 0);
+  transition: 0.3s;
+}
+
+#lms button:hover {
+  color: white;
+}

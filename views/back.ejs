@@ -1,0 +1,105 @@
+<%- include("./partials/header.ejs") %>
+  <%- include("./partials/course.ejs") %>
+
+    <div id="back">
+      <div class="instructions">
+        <h4>What is NodeJS ?</h4>
+        <ul>
+          <li>It is an open source server environment</li>
+          <li>It is free</li>
+          <li>
+            It runs on various platforms (Windows, Linux, Unix, Mac OS X, etc.)
+          </li>
+          <li>It uses JavaScript on the server</li>
+          <li>It can generate dynamic page content</li>
+          <li>It can collect form data</li>
+          <li>
+            It can create, open, read, write, delete, and close files on the server
+          </li>
+          <li>It can add, delete, modify data in your database</li>
+        </ul>
+      </div>
+
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/uVwtVBpw7RQ" title="YouTube video player"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="instructions">
+        <h4>What is Express ?</h4>
+        <p>
+          Express is a fast, assertive, essential and moderate web framework of
+          NodeJS
+        </p>
+        <ul>
+          <li>
+            It can be used to design single-page, multi-page and hybrid web
+            applications
+          </li>
+          <li>It allows to setup middlewares to respond to HTTP Requests</li>
+          <li>
+            It defines a routing table which is used to perform different actions
+            based on HTTP method and URL
+          </li>
+          <li>
+            It allows to dynamically render HTML Pages based on passing arguments to
+            templates
+          </li>
+        </ul>
+      </div>
+
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/pyKOM1whPfM" title="YouTube video player"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="instructions">
+        <h4>What is MongoDB ?</h4>
+        <p>
+          MongoDB is an open-source document database that provides high
+          performance, high availability, and automatic scaling written in C++.
+        </p>
+      </div>
+
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/-bt_y4Loofg" title="YouTube video player"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <% if(user.course.back===true){ %>
+        <button class="mark" disabled>Done</button>
+        <% } else { %>
+          <button class="mark backMark" data-doc="<%= user._id %>">
+            Mark as done.
+          </button>
+          <% } %>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <script>
+      const backMark = document.getElementsByClassName("backMark")[0];
+
+      backMark.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        console.log("Back");
+
+        const endpoint = `/course/back/${backMark.dataset.doc}`;
+
+        fetch(endpoint, {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => (window.location.href = data.redirect))
+          .catch((err) => console.log(err));
+      });
+    </script>
+
+    <%- include("./partials/footer.ejs") %>

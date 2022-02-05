@@ -1,0 +1,121 @@
+#sign_up {
+  grid-area: page_section;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#sign_up .jumbotron {
+  margin: 1rem 0;
+  padding: 2rem 2rem;
+  background-color: var(--color3);
+  box-shadow: 0 0 20px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+#sign_up h2 {
+  font-weight: 700;
+}
+
+#sign_up ul {
+  list-style: none;
+  margin: 0;
+}
+
+#sign_up li {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+}
+
+#sign_up #password {
+  font-weight: 400;
+}
+
+#sign_up #password:hover {
+  font-weight: 800;
+}
+
+#sign_up label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+#sign_up input {
+  margin: 0;
+  padding: 0.5em 1em;
+  width: 400px;
+  outline: none;
+  border: 2px solid var(--color1);
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+#sign_up #avatar {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 2px solid var(--color1);
+  font-size: 1rem;
+}
+
+#sign_up .submit {
+  margin: 0.75rem 0;
+  padding: 0.5em;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.75rem;
+  border-radius: 5px;
+  border: 2px solid var(--color1);
+  background-color: var(--color2);
+  transition: 0.3s;
+}
+
+#sign_up .submit:hover {
+  letter-spacing: 0rem;
+  color: white;
+}
+
+#sign_up p {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+#sign_up span {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  color: white;
+  transition: 0.1s;
+}
+
+#sign_up span:hover {
+  cursor: pointer;
+  color: var(--color4);
+}
+
+#sign_up #warning path {
+  fill: red;
+}
+
+#sign_up #warning {
+  margin: 10px;
+  font-size: 0.75rem;
+  color: red;
+  font-weight: 700;
+  line-height: 1.1em;
+}
+
+#sign_up li .error {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: red;
+}

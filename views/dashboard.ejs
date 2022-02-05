@@ -1,0 +1,206 @@
+<%- include("./partials/header.ejs") %>
+
+<section id="dashboard" class="page_section">
+  <div id="lms" class="jumbotron">
+    <h1>Learning Management System</h1>
+    <h3>Start Learning a New Skill. Get Trained.</h3>
+  </div>
+  <div class="container jumbotron">
+    <div id="tasks" class="jumbotron">
+      <p>Tasks</p>
+      <button class="add_task btn-sm">Add Task +</button>
+    </div>
+
+    <div class="new_task">
+      <form>
+        <div class="title">
+          <input
+            required
+            type="text"
+            name="title"
+            id="new_title"
+            placeholder="Enter Title"
+          />
+          <span id="user_id"><%= user._id %></span>
+        </div>
+        <div class="desc">
+          <textarea
+            id="new_desc"
+            name="desc"
+            rows="2"
+            cols="50"
+            placeholder="Enter Task Description"
+          ></textarea>
+          <div>
+            <input
+              type="date"
+              name="deadline"
+              id="deadline"
+              placeholder="Enter Deadline"
+              required
+            />
+            <button id="cancel" class="delete">Cancel</button>
+            <button id="add" class="mark">Add</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <% if(tasks.length > 0) {%> <% tasks.forEach( (task) => {%> <%
+    if(task.completed == true) { %>
+    <div style="background-color: rgba(0, 255, 0, 0.2)" class="task jumbotron">
+      <% } else { %>
+      <div class="task jumbotron">
+        <% } %>
+        <div class="title">
+          <p><%= task.title %></p>
+          <button class="read">
+            Read
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1.5rem"
+              viewBox="0 0 24 24"
+              width="1.5rem"
+              fill="#000000"
+            >
+              <path
+                d="M15.88 9.29L12 13.17 8.12 9.29c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.39-.39.39-1.02 0-1.41-.39-.38-1.03-.39-1.42 0z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="desc">
+          <p><%= task.description %></p>
+          <div>
+            <% if(task.completed === true){ %>
+            <p>
+              Completed :
+              <span style="color: rgba(0, 216, 0, 1); font-weight: 600"
+                >Yes</span
+              >
+            </p>
+            <% } else { %>
+            <p>
+              Completed : <span style="color: red; font-weight: 600">No</span>
+            </p>
+            <% } %>
+            <p>
+              Deadline: <%= task.deadline.getDate() %>/<%=
+              task.deadline.getMonth() %>/<%= task.deadline.getFullYear() %>
+            </p>
+            <% if(task.completed === true){ %>
+            <button class="mark" disabled>Mark as done.</button>
+            <% } else { %>
+            <button class="mark" data-doc="<%= task._id %>">
+              Mark as done.
+            </button>
+            <% } %>
+            <button class="delete" data-doc="<%= task._id %> ">Delete</button>
+          </div>
+        </div>
+      </div>
+      <% }) %> <% } else { %>
+      <p style="display: block; font-size: 1.5rem; font-weight: 600">
+        No tasks found ...
+      </p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<script>
+  const user_id = document.querySelector("#user_id").textContent;
+
+  let readLength = document.querySelectorAll(".read").length;
+  let reads = document.querySelectorAll(".read");
+  for (let i = 0; i < readLength; i++) {
+    let x = i;
+    reads[x].addEventListener("click", () => {
+      document.querySelectorAll(".task .desc")[x].classList.toggle("active");
+      document.querySelectorAll(".task .title")[x].classList.toggle("active");
+      document
+        .querySelectorAll(".task .read svg")
+        [x].classList.toggle("active");
+    });
+  }
+
+  document.querySelector(".add_task").addEventListener("click", () => {
+    document.querySelector(".new_task").classList.add("jumbotron");
+  });
+
+  document.querySelector("#cancel").addEventListener("click", () => {
+    document.querySelector(".new_task").classList.remove("jumbotron");
+  });
+
+  const form = document.querySelector(".new_task.jumbotron form");
+  const add = document.querySelector("#add");
+
+  add.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const title = document.querySelector("#new_title").value;
+    const description = document.querySelector("#new_desc").value;
+    const deadline = document.querySelector("#deadline").value;
+
+    try {
+      const res = await fetch("/dashboard", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id,
+          title,
+          description,
+          deadline,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.task) {
+        location.assign("/dashboard");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  let deleteLength = document.querySelectorAll(".task .delete").length;
+  let deletes = document.querySelectorAll(".task .delete");
+  for (let i = 0; i < deleteLength; i++) {
+    let x = i;
+    deletes[x].addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const endpoint = `/dashboard/${deletes[x].dataset.doc}`;
+
+      fetch(endpoint, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => (window.location.href = data.redirect))
+        .catch((err) => console.log(err));
+    });
+  }
+
+  let markLength = document.querySelectorAll(".task .mark").length;
+  let marks = document.querySelectorAll(".task .mark");
+  for (let i = 0; i < readLength; i++) {
+    let x = i;
+    marks[x].addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const endpoint = `/dashboard/${marks[x].dataset.doc}`;
+
+      fetch(endpoint, {
+        method: "POST",
+      })
+        .then((response) => response.json())
+        .then((data) => (window.location.href = data.redirect))
+        .catch((err) => console.log(err));
+    });
+  }
+</script>
+
+<%- include("./partials/footer.ejs") %>

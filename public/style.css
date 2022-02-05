@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  font-family: "Montserrat", "Poppins", Helvetica, sans-serif, Arial;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color1: rgba(0, 212, 255, 1);
+  --color2: rgb(236, 154, 0);
+  --color3: rgba(236, 153, 0, 0.6);
+  --color4: rgb(0, 149, 255);
+}
+
+html {
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.jumbotron {
+  background: transparent;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  width: 100px;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    var(--color1) 100%
+  );
+  background-repeat: no-repeat;
+  display: grid;
+  grid-template-areas: "header" "page_section" "footer";
+}
+
+footer {
+  height: 50px;
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer p {
+  text-align: center;
+  font-weight: 500;
+}

@@ -1,0 +1,44 @@
+<%- include("./partials/header.ejs") %>
+  <%- include("./partials/course.ejs") %>
+
+    <div id="fbf">
+      <p class="instructions">
+        Let's start by understanding the basics and a high level overview of
+        Backend, FullStack and frontend development.
+      </p>
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/pkdgVYehiTE" title="YouTube video player"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <% if(user.course.fbf===true){ %>
+        <button class="mark" disabled>Done</button>
+        <% } else { %>
+          <button class="mark fbfMark" data-doc="<%= user._id %>">Mark as done.</button>
+          <% } %>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <script>
+      const fbfMark = document.getElementsByClassName("fbfMark")[0];
+
+      fbfMark.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("FBF");
+
+        const endpoint = `/course/fbf/${fbfMark.dataset.doc}`;
+
+        fetch(endpoint, {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => (window.location.href = data.redirect))
+          .catch((err) => console.log(err));
+      });
+    </script>
+
+    <%- include("./partials/footer.ejs") %>

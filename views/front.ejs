@@ -1,0 +1,98 @@
+<%- include("./partials/header.ejs") %>
+  <%- include("./partials/course.ejs") %>
+
+    <div id="front">
+      <div class="instructions">
+        <h4>What is HTML ?</h4>
+        <ul>
+          <li>HTML stands for Hyper Text Markup Language</li>
+          <li>HTML is the standard markup language for creating Web pages</li>
+          <li>HTML describes the structure of a Web page</li>
+          <li>HTML consists of a series of elements</li>
+          <li>HTML elements tell the browser how to display the content</li>
+          <li>
+            HTML elements label pieces of content such as "this is a heading", "this
+            is a paragraph", "this is a link", etc.
+          </li>
+        </ul>
+      </div>
+
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/cZCq8lQ-vZ0" title="YouTube video player"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="instructions">
+        <h4>What is CSS ?</h4>
+        <ul>
+          <li>CSS stands for Cascading Style Sheets</li>
+          <li>
+            CSS describes how HTML elements are to be displayed on screen, paper, or
+            in other media
+          </li>
+          <li>
+            CSS saves a lot of work. It can control the layout of multiple web pages
+            all at once
+          </li>
+          <li>External stylesheets are stored in CSS files</li>
+        </ul>
+      </div>
+
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/4BEyFVufmM8" title="YouTube video player"
+          frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="instructions">
+        <h4>What is JavaScript ?</h4>
+        <p>
+          JavaScript is a text-based programming language used both on the
+          client-side and server-side that allows you to make web pages interactive.
+          Where HTML and CSS are languages that give structure and style to web
+          pages, JavaScript gives web pages interactive elements that engage a user.
+        </p>
+      </div>
+
+      <div class="vid">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/upDLs1sn7g4" title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <% if(user.course.front===true){ %>
+        <button class="mark" disabled>Done</button>
+        <% } else { %>
+          <button class="mark frontMark" data-doc="<%= user._id %>">
+            Mark as done.
+          </button>
+          <% } %>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <script>
+      const frontMark = document.getElementsByClassName("frontMark")[0];
+
+      frontMark.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        console.log("Front");
+
+        const endpoint = `/course/front/${frontMark.dataset.doc}`;
+
+        fetch(endpoint, {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => (window.location.href = data.redirect))
+          .catch((err) => console.log(err));
+      });
+    </script>
+
+    <%- include("./partials/footer.ejs") %>

@@ -1,0 +1,216 @@
+#lms {
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+#lms h1 {
+  font-size: 3rem;
+  font-weight: 600;
+  margin: 2rem;
+}
+
+#lms h3 {
+  margin: 2rem;
+}
+
+#lms p {
+  width: 100%;
+}
+
+#lms button {
+  margin: 1rem;
+  padding: 0.2em;
+  width: 40%;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 2px solid rgb(223, 145, 2);
+  background-color: rgb(236, 154, 0);
+  transition: 0.3s;
+}
+
+#lms button:hover {
+  color: white;
+}
+
+#dashboard .container {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  padding-top: 0px;
+  margin-bottom: 0px;
+}
+
+#dashboard .container div {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#dashboard .container #tasks {
+  padding: 0 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0px;
+  border-bottom: 2px solid black;
+}
+
+#dashboard .container #tasks p {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+#dashboard .container #tasks button {
+  text-align: center;
+  width: fit-content;
+  padding: 0.5em 0.5em;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid var(--color2);
+  background-color: limegreen;
+}
+
+#dashboard .new_task.jumbotron form {
+  width: 100%;
+}
+
+#dashboard .new_task {
+  display: none;
+  transition: 0.2s;
+}
+
+#dashboard .task,
+.new_task.jumbotron {
+  padding: 2rem;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 5px solid var(--color2);
+  border-radius: 10px;
+  margin: 1rem 0;
+  background-color: rgb(255, 255, 255, 0.5);
+  box-shadow: 0 0 10px black;
+}
+
+#dashboard .task div,
+.new_task.jumbotron div {
+  width: 100%;
+}
+
+#dashboard .task .title p,
+.new_task.jumbotron p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+#dashboard .task .title.active {
+  border-bottom: 2px solid orange;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#dashboard .new_task.jumbotron .title {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid orange;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#dashboard .task .desc,
+.new_task.jumbotron .desc {
+  display: none;
+  margin: 0.5em 0;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  transition: 0.2s;
+}
+
+.new_task.jumbotron .desc {
+  margin: 0;
+}
+
+.new_task.jumbotron #new_desc {
+  margin: 0.5em 0;
+}
+
+.new_task.jumbotron #user_id {
+  display: none;
+}
+
+.new_task #user_id {
+  display: none;
+}
+
+#dashboard .task .desc.active {
+  display: flex;
+}
+
+#dashboard .task button,
+.new_task.jumbotron button {
+  display: inline;
+  text-align: center;
+  padding: 0.25em;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid var(--color2);
+  transition: 0.2s;
+}
+
+#dashboard .task .read svg.active {
+  transform: rotate(180deg);
+}
+
+#dashboard .task .desc p {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#dashboard .task .mark,
+.new_task.jumbotron .mark {
+  padding: 0.25em 0.5em;
+  width: fit-content;
+  background-color: rgba(0, 216, 0, 0.6);
+}
+
+#dashboard .task .delete,
+.new_task.jumbotron .delete {
+  background-color: rgba(226, 0, 0, 0.6);
+}
+
+#dashboard .task .update {
+  background-color: var(--color3);
+}
+
+#dashboard .new_task input,
+.new_task textarea,
+.new_task button {
+  display: none;
+  transition: 0.3s;
+}
+
+#dashboard .new_task.jumbotron input,
+.new_task.jumbotron textarea {
+  display: inline;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid var(--color2);
+  padding: 0.25em 1em;
+}

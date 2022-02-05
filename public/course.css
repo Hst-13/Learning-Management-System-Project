@@ -1,0 +1,132 @@
+#course {
+  width: 100%;
+  height: 100vh;
+  padding-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  grid-area: page_section;
+}
+
+#course .container {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  margin-bottom: 0;
+  display: grid;
+  grid-template-areas: "list main";
+  grid-template-columns: 1fr 2fr;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 3px solid var(--color2);
+  box-shadow: 0 0 10px black;
+}
+
+#course .content {
+  grid-area: list;
+  padding-right: 1rem;
+  height: 100%;
+  border-right: 3px solid var(--color2);
+}
+
+#course .title {
+  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color2);
+}
+
+#course .content p {
+  height: 50px;
+  font-size: 1.5rem;
+}
+
+#course .content .topics {
+  margin: 0;
+  list-style: inside;
+  list-style-type: decimal;
+  text-align: left;
+}
+
+#course .content .subTopics {
+  margin: 0;
+  list-style: inside;
+  list-style-type: disc;
+  text-align: left;
+}
+
+#course .content li {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0.5em 0;
+  padding: 0.5em 0;
+  transition: 0.2s;
+}
+
+#course .content .topic {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+#course .content .subTopics li {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0.5em 0;
+  transition: 0.2s;
+}
+
+#course .content .topics li:hover {
+  cursor: pointer;
+  color: var(--color2);
+  text-decoration: underline var(--color4);
+}
+
+#course .main {
+  grid-area: main;
+  border-left: 3px solid var(--color2);
+}
+
+#course .title {
+  margin-bottom: 0rem;
+}
+
+#course .lesson {
+  border-radius: 0px;
+  padding: 2rem;
+  margin: 0;
+  height: 580px;
+  overflow-y: scroll;
+  box-sizing: content-box;
+  white-space: wrap;
+}
+
+#course .lesson .instructions {
+  text-align: justify;
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+#course .vid {
+  margin: 0 0 1.5rem 0;
+}
+
+#course iframe {
+  border-radius: 10px;
+}
+
+#course .lesson .mark {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid var(--color2);
+  padding: 0.5em 1em;
+  width: fit-content;
+  background-color: rgba(0, 216, 0, 0.6);
+}

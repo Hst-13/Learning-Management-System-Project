@@ -1,0 +1,169 @@
+<%- include("./partials/header.ejs") %>
+
+  <section id="profile">
+    <div class="container jumbotron">
+      <div class="upper jumbotron">
+        <div class="picture">
+          <img src="/user.png" alt="Avatar" />
+          <label for="avatar">Change profile picture :</label>
+          <input disabled type="file" id="avatar" name="avatar" accept="image/*" />
+        </div>
+
+        <div class="name">
+          <p id="full_name">
+            <%= user.firstName %>
+              <%= user.lastName %>
+          </p>
+          <p id="username">
+            <%= user.username %>
+          </p>
+          <p id="email">
+            <%= user.email %>
+          </p>
+        </div>
+      </div>
+
+      <div class="details jumbotron">
+        <form>
+          <ul>
+            <li>
+              <p>Profile</p>
+            </li>
+            <li>
+              <label for="user_name">Username <span style="color: red">*</span>
+              </label>
+              <input disabled id="user_name" type="text" value="<%= user.username %>" name="user_name" />
+              <div class="username error"></div>
+            </li>
+            <li>
+              <label for="first_name">First Name</label>
+              <input disabled id="first_name" type="text" value="<%= user.firstName %> " name="first_name" />
+            </li>
+            <li>
+              <label for="last_name">Last Name</label>
+              <input disabled id="last_name" type="text" value="<%= user.lastName %>" name="last_name" />
+            </li>
+            <li>
+              <label for="gender">Gender</label>
+              <select disabled id="gender" name="gender">
+                <option style="
+                  color: rgb(0, 214, 0);
+                  background-color: rgba(2, 200, 255, 0.2);
+                ">
+                  <%= user.gender %>
+                </option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </li>
+            <li>
+              <label for="email">Email <span style="color: red">*</span> </label>
+              <input disabled required id="login_id" type="email" value="<%= user.email %>" name="email" />
+              <div class="email error"></div>
+            </li>
+            <li>
+              <label for="password">Password <span style="color: red">*</span>
+              </label>
+              <input disabled required id="password" name="password" type="text" placeholder="Change Password"
+                minlength="6" />
+              <div class="password error"></div>
+            </li>
+            <li>
+              <label for="role">Role</label>
+              <select disabled id="role" name="role">
+                <option style="
+                  color: rgb(0, 214, 0);
+                  background-color: rgba(2, 200, 255, 0.2);
+                ">
+                  <%= user.role %>
+                </option>
+                <option>Student</option>
+                <option>Instructor</option>
+              </select>
+            </li>
+            <div class="buttons">
+              <button disabled class="cancel btn-sm">Cancel</button>
+              <button class="edit btn-sm">Edit</button>
+              <input disabled type="submit" class="save btn-sm" data-doc="<%= user._id %>" value="Save" />
+            </div>
+          </ul>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.querySelector("form");
+    const cancel = document.querySelector(".cancel");
+    const edit = document.querySelector(".edit");
+    const save = document.querySelector(".save");
+    const usernameError = document.querySelector(".username.error");
+    const emailError = document.querySelector(".email.error");
+    const passwordError = document.querySelector(".password.error");
+
+    edit.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      console.log("Edit Clicked !!");
+      edit.disabled = true;
+      save.disabled = false;
+      cancel.disabled = false;
+      document.querySelectorAll("input").forEach((data) => {
+        data.disabled = false;
+      });
+      document.querySelectorAll("select").forEach((data) => {
+        data.disabled = false;
+      });
+    });
+
+    cancel.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      console.log("Cancel Clicked !!");
+      cancel.disabled = true;
+      save.disabled = true;
+      edit.disabled = false;
+      document.querySelectorAll("input").forEach((data) => {
+        data.disabled = true;
+      });
+      document.querySelectorAll("select").forEach((data) => {
+        data.disabled = true;
+      });
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const username = form.user_name.value;
+      const firstName = form.first_name.value;
+      const lastName = form.last_name.value;
+      const gender = form.gender.value;
+      const email = form.email.value;
+      const password = form.password.value;
+      const role = form.role.value;
+
+      const endpoint = `/profile/${save.dataset.doc}`;
+
+      fetch(endpoint, {
+        method: "POST",
+        body: JSON.stringify({
+          username,
+          firstName,
+          lastName,
+          gender,
+          email,
+          password,
+          role,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => (window.location.href = data.redirect))
+        .catch((err) => console.log(err));
+    });
+  </script>
+
+  <%- include("./partials/footer.ejs") %>

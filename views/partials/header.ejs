@@ -18,14 +18,12 @@
 
 <body>
   <% if(user) { %>
-    <header style="height: <%= header %>">
-      <div class="container">
+    <header style="min-height: <%= header %>">
+      <div class="container2">
         <a id="logo" href="/dashboard">LMS</a>
-        <div class="register">
-          <a href="/logout"><button class="btn-md">Log out</button></a>
-        </div>
+        <a href="/logout"><button class="btn-md">Log out</button></a>
       </div>
-      <section id="nav">
+      <section id="nav" class="jumbotron">
         <nav>
           <p id="greet">Hi, <%= user.firstName %>
           </p>
@@ -49,7 +47,7 @@
     </header>
 
     <% } else { %>
-      <header style="height: <%= header %>">
+      <header style="min-height: <%= header %>">
         <div class="container">
           <a id="logo" href="/">LMS</a>
           <div class="register">

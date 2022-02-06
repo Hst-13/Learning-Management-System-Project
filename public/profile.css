@@ -1,9 +1,13 @@
 #profile {
-  width: 100%;
   grid-area: page_section;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  align-items: center;
 }
 
 #profile .container {
+  max-width: 100%;
   display: flex;
   flex-wrap: nowrap;
   flex-flow: column;
@@ -12,6 +16,7 @@
 }
 
 #profile .upper {
+  width: 100%;
   padding: 2rem;
   margin-bottom: 0;
   display: flex;
@@ -26,6 +31,7 @@
 
 #profile .picture {
   width: 40%;
+  height: 100%;
   display: flex;
   flex-flow: column;
   flex-wrap: nowrap;
@@ -36,7 +42,8 @@
 #profile .picture img {
   border: 3px solid var(--color2);
   border-radius: 50%;
-  width: 30%;
+  width: 60%;
+  max-width: 160px;
   background-color: rgb(201, 201, 201);
   margin-bottom: 0.5rem;
 }
@@ -103,6 +110,7 @@
 }
 
 #profile .details {
+  width: 100%;
   margin-top: 2rem;
   padding: 2rem;
   margin-bottom: 0;
@@ -146,4 +154,27 @@
   outline: none;
   border: 2px solid var(--color4);
   border-radius: 5px;
+}
+
+@media (max-width: 620px) {
+  #profile .name {
+    padding-left: 1rem;
+  }
+  #profile #full_name {
+    font-size: 2.5rem;
+  }
+
+  #profile #username {
+    font-size: 1.5rem;
+  }
+
+  #profile #email {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 620px) {
+  #profile #full_name {
+    font-size: 1.75rem;
+  }
 }

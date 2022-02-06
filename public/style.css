@@ -14,6 +14,7 @@
 }
 
 html {
+  min-width: 100%;
   font-size: 16px;
   box-sizing: border-box;
 }
@@ -31,7 +32,7 @@ button {
 }
 
 body {
-  width: 100%;
+  min-width: 100%;
   min-height: 100vh;
   max-height: 100%;
   background: linear-gradient(
@@ -42,17 +43,26 @@ body {
   background-repeat: no-repeat;
   display: grid;
   grid-template-areas: "header" "page_section" "footer";
+  grid-template-columns: 100%;
 }
 
 footer {
   height: 50px;
   grid-area: footer;
   display: flex;
+  flex-flow: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 1rem;
 }
 
 footer p {
   text-align: center;
   font-weight: 500;
+}
+
+@media (max-width: 580px) {
+  html {
+    font-size: 14px;
+  }
 }

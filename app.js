@@ -24,7 +24,9 @@ const dbURI = "mongodb+srv://lms_user:hst_13@cluster0.gmuj3.mongodb.net/lms-db";
 
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(process.env.PORT || 3000))
+  .then(() => {
+    app.listen(process.env.PORT || 3000);
+  })
   .catch((err) => console.log(err));
 
 app.use(express.static("public"));

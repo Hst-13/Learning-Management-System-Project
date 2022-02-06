@@ -143,6 +143,11 @@
 
 .new_task.jumbotron .desc {
   margin: 0;
+  width: 100%;
+}
+
+new_task.jumbotron .desc input {
+  width: 95%;
 }
 
 .new_task.jumbotron #new_desc {

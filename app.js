@@ -17,7 +17,7 @@ const imageRoutes = require("./routes/imageRoutes");
 
 app.set("view engine", "ejs");
 
-const dbURI = "mongodb+srv://lms_user:hst_13@cluster0.gmuj3.mongodb.net/lms-db";
+const dbURI = "mongodb+srv://<user_name>:<password>@<cluster_name>.gmuj3.mongodb.net/<database_name>";
 
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })

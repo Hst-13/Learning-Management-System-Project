@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const Grid = require("gridfs-stream");
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -38,22 +40,73 @@ const createToken = (id) => {
   });
 };
 
+const conn = mongoose.connection;
+let gfs;
+conn.once("open", () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
 const signup_get = (req, res) => {
-  res.render("signup", {
-    stylesheet: "/signup.css",
-    title: ": Sign Up",
-    header: "92px",
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      res.render("signup", {
+        stylesheet: "/signup.css",
+        title: ": Sign Up",
+        header: "92px",
+        files: false,
+      });
+    } else {
+      files.map((file) => {
+        if (file.contentType.split("/")[0] === "image") {
+          file.isImage = true;
+        } else {
+          file.isImage = false;
+        }
+      });
+      User.find().then((users) => {
+        if (
+          JSON.stringify(users[users.length - 1].imageId) ===
+          JSON.stringify(files[files.length - 1]._id)
+        ) {
+          res.render("signup", {
+            stylesheet: "/signup.css",
+            title: ": Sign Up",
+            header: "92px",
+            files: false,
+          });
+        } else {
+          res.render("signup", {
+            stylesheet: "/signup.css",
+            title: ": Sign Up",
+            header: "92px",
+            files: files[files.length - 1],
+          });
+        }
+      });
+    }
   });
 };
 
 const signup_post = async (req, res) => {
   req.body.gender = "Gender";
   req.body.role = "Role";
-  const { username, firstName, lastName, gender, email, password, role } =
-    req.body;
+  const {
+    imageId,
+    username,
+    firstName,
+    lastName,
+    gender,
+    email,
+    password,
+    role,
+  } = req.body;
 
   try {
     const user = await User.create({
+      imageId,
       username,
       firstName,
       lastName,
@@ -106,9 +159,18 @@ const logout_get = (req, res) => {
 
 const profile_update = (req, res) => {
   const id = req.params.id;
-  const { username, firstName, lastName, gender, email, password, role } =
-    req.body;
+  const {
+    imageId,
+    username,
+    firstName,
+    lastName,
+    gender,
+    email,
+    password,
+    role,
+  } = req.body;
   User.findByIdAndUpdate(id, {
+    imageId: `${imageId}`,
     username: `${username}`,
     firstName: `${firstName}`,
     lastName: `${lastName}`,

@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const { isEmail } = require("validator");
 
 const userSchema = new mongoose.Schema({
+  imageId: {
+    type: String,
+  },
   username: {
     type: String,
     unique: true,

@@ -1,8 +1,9 @@
 <%- include("./partials/header.ejs") %>
 
   <section id="sign_up">
+
     <div class="jumbotron">
-      <form enctype="multipart/form-data">
+      <form action="/upload" method="POST" enctype="multipart/form-data">
         <h2>Sign Up</h2>
         <p id="warning">
           <svg xmlns="http://www.w3.org/2000/svg" height="1rem" viewBox="0 0 24 24" width="1rem">
@@ -11,6 +12,25 @@
           </svg>Do not enter Personal Email, as this is a project !! <br />Enter Fake
           Email and Password!!
         </p>
+        <li>
+          <% if(files){ %>
+            <!-- <div class="card card-body mb-3"> -->
+            <!-- <% if(files.isImage) { %>
+                <img src="image/<%= files.filename %>" alt="<%= files._id %>">
+                <% } else { %>
+                  <%= files.filename %>
+                    <% } %> -->
+            <button class="btn btn-danger btn-block mt-4" data-doc="<%= files._id %>">Delete Submitted Image</button>
+            <!-- </div> -->
+            <% } %>
+              <label for="file">Choose a profile picture :</label>
+              <input id="img_choose" type="file" accept="image/*" name="file">
+              <input id="img_submit" type="submit" class="btn btn-sm"
+                style="padding: 0 0.5em; width: fit-content; background-color: var(--color1);">
+        </li>
+      </form>
+      <hr>
+      <form id="signup_form">
         <ul>
           <li>
             <label for="username">Username :</label>
@@ -35,10 +55,6 @@
             <input id="password" name="password" type="password" placeholder="Minimum 6 characters" />
             <div class="password error"></div>
           </li>
-          <li>
-            <label for="file">Choose a profile picture :</label>
-            <input type="file" id="avatar" name="avatar" accept="image/*" />
-          </li>
         </ul>
         <input type="submit" class="submit btn btn-md" value="Continue" />
       </form>
@@ -50,10 +66,17 @@
   </section>
 
   <script>
-    const form = document.querySelector("form");
+    const form = document.querySelector("#signup_form");
     const usernameError = document.querySelector(".username.error");
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
+    let imageId = "";
+
+    if (document.querySelector('.btn-danger')) {
+      imageId = document.querySelector(".btn-danger").dataset.doc.trim();
+      document.querySelector('#img_submit').disabled = true;
+      document.querySelector('#img_choose').disabled = true;
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -72,6 +95,7 @@
         const res = await fetch("/signup", {
           method: "POST",
           body: JSON.stringify({
+            imageId,
             username,
             firstName,
             lastName,
@@ -95,6 +119,20 @@
       } catch (err) {
         console.log(err);
       }
+    });
+
+    let deletes = document.querySelector(".btn-danger");
+    deletes.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const endpoint = `/files/${deletes.dataset.doc}`;
+
+      fetch(endpoint, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => (window.location.href = data.redirect))
+        .catch((err) => console.log(err));
     });
   </script>
 

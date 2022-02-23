@@ -4,9 +4,16 @@
     <div class="container jumbotron">
       <div class="upper jumbotron">
         <div class="picture">
-          <img src="/user.png" alt="Avatar" />
-          <label for="avatar">Change profile picture :</label>
-          <input disabled type="file" id="avatar" name="avatar" accept="image/*" />
+          <% let count=0; if(files){ %>
+            <% files.forEach(function(file) { %>
+              <% if(file.isImage && (JSON.stringify(user.imageId)===JSON.stringify(file._id))) { %>
+                <% count +=1; %>
+                  <img id="displaying" src="image/<%= file.filename %>" alt="<%= file.filename %>">
+                  <button class="btn btn-danger btn-sm " data-doc="<%= file._id %>">Delete</button>
+                  <% }}) %>
+                    <% } if(count==0) { %>
+                      <img src="/user.png" alt="Avatar" />
+                      <% } %>
         </div>
 
         <div class="name">
@@ -24,11 +31,20 @@
       </div>
 
       <div class="details jumbotron">
-        <form>
+        <p>Profile</p>
+        <form id="img_form" action="/profile/upload" method="POST" enctype="multipart/form-data" <% if(files) { %>
+          data-doc="<%= files[files.length - 1]._id %>" <% } %>>
+              <li><label for="file">Choose a profile picture :</label>
+                <div style="display: flex; flex-flow: column;">
+                  <input id="img_choose" type="file" accept="image/*" name="file" style="border: 0px; padding: 0;"
+                    disabled>
+                  <input id="img_submit" type="submit" class="btn btn-sm" value="Submit Image"
+                    style="padding: 0 0.5em; width: fit-content; background-color: var(--color1);" disabled>
+                </div>
+              </li>
+        </form>
+        <form id="user_details">
           <ul>
-            <li>
-              <p>Profile</p>
-            </li>
             <li>
               <label for="user_name">Username <span style="color: red">*</span>
               </label>
@@ -94,13 +110,14 @@
   </section>
 
   <script>
-    const form = document.querySelector("form");
+    const user_form = document.querySelector("#user_details");
     const cancel = document.querySelector(".cancel");
     const edit = document.querySelector(".edit");
     const save = document.querySelector(".save");
     const usernameError = document.querySelector(".username.error");
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
+    let imageId = ""
 
     edit.addEventListener("click", (e) => {
       e.preventDefault();
@@ -115,6 +132,10 @@
       document.querySelectorAll("select").forEach((data) => {
         data.disabled = false;
       });
+      if (document.querySelector('.btn-danger')) {
+        document.querySelector('#img_submit').disabled = true;
+        document.querySelector('#img_choose').disabled = true;
+      }
     });
 
     cancel.addEventListener("click", (e) => {
@@ -132,22 +153,25 @@
       });
     });
 
-    form.addEventListener("submit", (e) => {
+    imageId = document.querySelector("#img_form").dataset.doc.trim();
+
+    user_form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const username = form.user_name.value;
-      const firstName = form.first_name.value;
-      const lastName = form.last_name.value;
-      const gender = form.gender.value;
-      const email = form.email.value;
-      const password = form.password.value;
-      const role = form.role.value;
+      const username = user_form.user_name.value;
+      const firstName = user_form.first_name.value;
+      const lastName = user_form.last_name.value;
+      const gender = user_form.gender.value;
+      const email = user_form.email.value;
+      const password = user_form.password.value;
+      const role = user_form.role.value;
 
       const endpoint = `/profile/${save.dataset.doc}`;
 
       fetch(endpoint, {
         method: "POST",
         body: JSON.stringify({
+          imageId,
           username,
           firstName,
           lastName,
@@ -159,6 +183,20 @@
         headers: {
           "Content-Type": "application/json",
         },
+      })
+        .then((response) => response.json())
+        .then((data) => (window.location.href = data.redirect))
+        .catch((err) => console.log(err));
+    });
+
+    let deletes = document.querySelector(".btn-danger");
+    deletes.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const endpoint = `/profile_image/${deletes.dataset.doc}`;
+
+      fetch(endpoint, {
+        method: "DELETE",
       })
         .then((response) => response.json())
         .then((data) => (window.location.href = data.redirect))

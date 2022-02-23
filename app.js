@@ -2,10 +2,6 @@ const express = require("express");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const path = require("path");
-const crypto = require("crypto");
-const multer = require("multer");
-const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
 
 const app = express();
@@ -17,6 +13,7 @@ const {
 const { getTasks } = require("./middleware/taskMiddleware");
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const imageRoutes = require("./routes/imageRoutes");
 
 app.set("view engine", "ejs");
 
@@ -52,11 +49,39 @@ app.get("/dashboard", requireAuth, async (req, res) => {
   });
 });
 
+const conn = mongoose.connection;
+let gfs;
+conn.once("open", () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
 app.get("/profile", requireAuth, (req, res) => {
-  res.render("profile", {
-    stylesheet: "/profile.css",
-    title: ": Profile",
-    header: "140px",
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      res.render("profile", {
+        stylesheet: "/profile.css",
+        title: ": Profile",
+        header: "140px",
+        files: false,
+      });
+    } else {
+      files.map((file) => {
+        if (file.contentType.split("/")[0] === "image") {
+          file.isImage = true;
+        } else {
+          file.isImage = false;
+        }
+      });
+      res.render("profile", {
+        stylesheet: "/profile.css",
+        title: ": Profile",
+        header: "140px",
+        files: files,
+      });
+    }
   });
 });
 
@@ -85,4 +110,5 @@ app.get("/course/back", requireAuth, (req, res) => {
 });
 
 app.use(taskRoutes);
+app.use(imageRoutes);
 app.use(authRoutes);

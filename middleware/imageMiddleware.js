@@ -6,8 +6,6 @@ const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 const Grid = require("gridfs-stream");
 
-const dbURI = "mongodb+srv://<user_name>:<password>@<cluster_name>.gmuj3.mongodb.net/<database_name>";
-
 // Create storage engine
 const storage = new GridFsStorage({
   url: dbURI,

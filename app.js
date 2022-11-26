@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
@@ -17,7 +18,7 @@ const imageRoutes = require("./routes/imageRoutes");
 
 app.set("view engine", "ejs");
 
-const dbURI = "mongodb+srv://<user_name>:<password>@<cluster_name>.gmuj3.mongodb.net/<database_name>";
+const dbURI = process.env.dbURI;
 
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -8,7 +8,7 @@ const Grid = require("gridfs-stream");
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: dbURI,
+  url: process.env.dbURI,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
